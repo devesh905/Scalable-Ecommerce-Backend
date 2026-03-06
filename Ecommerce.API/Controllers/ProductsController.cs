@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Ecommerce.Domain.Entities;
 using Ecommerce.Infrastructure.Persistence;
-using Ecommerce.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ecommerce.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
@@ -17,6 +20,7 @@ public class ProductsController : ControllerBase
     }
 
     // GET: api/products
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -37,6 +41,7 @@ public class ProductsController : ControllerBase
     }
 
     // POST: api/products
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create(Product product)
     {
@@ -60,6 +65,7 @@ public class ProductsController : ControllerBase
     }
 
     // DELETE: api/products/5
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
