@@ -1,9 +1,11 @@
 ﻿using Ecommerce.Domain.Entities;
 using Ecommerce.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace Ecommerce.API.Controllers;
 
@@ -13,18 +15,40 @@ namespace Ecommerce.API.Controllers;
 public class ProductsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
+    private readonly IDistributedCache _cache;
 
-    public ProductsController(ApplicationDbContext context)
+    public ProductsController(ApplicationDbContext context, IDistributedCache cache)
     {
         _context = context;
+        _cache = cache;
     }
 
     // GET: api/products
-    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
+        var cacheKey = "products";
+
+        var cachedProducts = await _cache.GetStringAsync(cacheKey);
+
+        if (!string.IsNullOrEmpty(cachedProducts))
+        {
+            var productsFromCache =
+                JsonSerializer.Deserialize<List<Product>>(cachedProducts);
+
+            return Ok(productsFromCache);
+        }
+
         var products = await _context.Products.ToListAsync();
+
+        var options = new DistributedCacheEntryOptions()
+            .SetSlidingExpiration(TimeSpan.FromMinutes(5));
+
+        await _cache.SetStringAsync(
+            cacheKey,
+            JsonSerializer.Serialize(products),
+            options);
+
         return Ok(products);
     }
 
