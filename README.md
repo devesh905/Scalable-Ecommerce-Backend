@@ -156,29 +156,6 @@ Cache invalidation occurs when:
 
 ---
 
-# 📌 API Endpoints
-
-## Authentication
-
-| Method | Endpoint             | Description             |
-| ------ | -------------------- | ----------------------- |
-| POST   | `/api/auth/register` | Register new user       |
-| POST   | `/api/auth/login`    | Login and get JWT token |
-
----
-
-## Products
-
-| Method | Endpoint             | Description       |
-| ------ | -------------------- | ----------------- |
-| GET    | `/api/products`      | Get all products  |
-| GET    | `/api/products/{id}` | Get product by id |
-| POST   | `/api/products`      | Create product    |
-| PUT    | `/api/products/{id}` | Update product    |
-| DELETE | `/api/products/{id}` | Delete product    |
-
----
-
 # 🧪 API Testing
 
 You can test APIs using:
@@ -276,7 +253,7 @@ This project was built as a **learning exercise to understand modern backend sys
 
 **Devesh Kumar Upadhyay**
 
-Backend Developer | .NET | Data & Systems Enthusiast
+Backend Developer | .NET Core | ASP.NET Core
 
 ---
 
