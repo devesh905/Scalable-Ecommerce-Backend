@@ -72,6 +72,8 @@ public class ProductsController : ControllerBase
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
 
+        await _cache.RemoveAsync("products");   // clear cache
+
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
 
@@ -100,6 +102,8 @@ public class ProductsController : ControllerBase
 
         _context.Products.Remove(product);
         await _context.SaveChangesAsync();
+
+        await _cache.RemoveAsync("products");
 
         return NoContent();
     }
