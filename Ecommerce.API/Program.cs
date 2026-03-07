@@ -1,11 +1,12 @@
-using Ecommerce.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+using Ecommerce.API.Workers;
 using Ecommerce.Application.Interfaces;
+using Ecommerce.Infrastructure.Persistence;
 using Ecommerce.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Extensions.Caching.Distributed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+builder.Services.AddHostedService<ProductCacheCleanupWorker>();
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 
