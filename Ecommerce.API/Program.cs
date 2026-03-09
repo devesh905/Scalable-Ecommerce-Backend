@@ -1,3 +1,4 @@
+using Ecommerce.API.Services;
 using Ecommerce.API.Workers;
 using Ecommerce.Application.Interfaces;
 using Ecommerce.Infrastructure.Persistence;
@@ -39,6 +40,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddHostedService<ProductCacheCleanupWorker>();
+
+builder.Services.AddSingleton<RabbitMQService>();
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 
