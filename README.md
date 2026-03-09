@@ -226,6 +226,8 @@ This project demonstrates several **backend engineering concepts**:
 * Dependency Injection
 * Database migrations
 * Repository Pattern
+* Background job processing
+* Docker containerization
 
 ---
 
@@ -233,8 +235,6 @@ This project demonstrates several **backend engineering concepts**:
 
 Planned enhancements:
 
-* Background job processing
-* Docker containerization
 * Message queue (Kafka / RabbitMQ)
 * Global exception middleware
 * API rate limiting
