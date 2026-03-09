@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = "localhost:6379";
+    options.Configuration = "redis:6379";  //options.Configuration = "localhost:6379";
     options.InstanceName = "Ecommerce_";
 });
 
